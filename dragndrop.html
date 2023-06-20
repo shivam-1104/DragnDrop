@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drag and Drop Example</title>
+    <style>
+        .container {
+            display: inline-block;
+            width: 200px;
+            height: 300px;
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        .item {
+            width: 50px;
+            height: 50px;
+            background-color: #ccc;
+            margin-bottom: 5px;
+        }
+
+        .success {
+            background-color: green;
+        }
+
+        .success-message {
+            color: green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container1">
+        <div class="item draggable" draggable="true"></div>
+        <div class="item draggable" draggable="true"></div>
+        <div class="item draggable" draggable="true"></div>
+    </div>
+    <div class="container" id="container2"></div>
+    <div class="success-message" id="successMessage" style="display: none;">Item dropped successfully!</div>
+    <button onclick="reset()">Reset</button>
+
+    <script>
+        const containers = document.querySelectorAll('.container');
+        const draggableItems = document.querySelectorAll('.draggable');
+        const container2 = document.getElementById('container2');
+        const successMessage = document.getElementById('successMessage');
+
+        let draggedItem = null;
+
+        draggableItems.forEach(item => {
+            item.addEventListener('dragstart', () => {
+                draggedItem = item;
+                item.style.opacity = '0.5';
+            });
+
+            item.addEventListener('dragend', () => {
+                draggedItem = null;
+                item.style.opacity = '1';
+            });
+        });
+
+        containers.forEach(container => {
+            container.addEventListener('dragover', e => {
+                e.preventDefault();
+            });
+
+            container.addEventListener('dragenter', e => {
+                e.preventDefault();
+                container.style.background = 'lightgray';
+            });
+
+            container.addEventListener('dragleave', () => {
+                container.style.background = '';
+            });
+
+            container.addEventListener('drop', () => {
+                container.append(draggedItem);
+                container.style.background = '';
+                draggedItem.classList.add('success');
+                successMessage.style.display = 'block';
+
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                    draggedItem.classList.remove('success');
+                }, 2000);
+            });
+        });
+
+        function reset() {
+            container1.innerHTML = '<div class="item draggable" draggable="true"></div><div class="item draggable" draggable="true"></div><div class="item draggable" draggable="true"></div>';
+            container2.innerHTML = '';
+            draggedItem = null;
+            successMessage.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Drag and Drop Example</title>
+    <style>
+        .container {
+            display: inline-block;
+            width: 200px;
+            height: 300px;
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        .item {
+            width: 50px;
+            height: 50px;
+            background-color: #ccc;
+            margin-bottom: 5px;
+        }
+
+        .success {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container1">
+        <div class="item draggable" draggable="true"></div>
+        <div class="item draggable" draggable="true"></div>
+        <div class="item draggable" draggable="true"></div>
+    </div>
+    <div class="container" id="container2"></div>
+    <button onclick="reset()">Reset</button>
+
+    <script>
+        const containers = document.querySelectorAll('.container');
+        const draggableItems = document.querySelectorAll('.draggable');
+        const container2 = document.getElementById('container2');
+
+        let draggedItem = null;
+
+        draggableItems.forEach(item => {
+            item.addEventListener('dragstart', () => {
+                draggedItem = item;
+                setTimeout(() => {
+                    item.style.display = 'none';
+                }, 0);
+            });
+
+            item.addEventListener('dragend', () => {
+                setTimeout(() => {
+                    item.style.display = 'block';
+                    draggedItem = null;
+                }, 0);
+            });
+        });
+
+        containers.forEach(container => {
+            container.addEventListener('dragover', e => {
+                e.preventDefault();
+            });
+
+            container.addEventListener('dragenter', e => {
+                e.preventDefault();
+                container.style.background = 'lightgray';
+            });
+
+            container.addEventListener('dragleave', () => {
+                container.style.background = '';
+            });
+
+            container.addEventListener('drop', () => {
+                container.append(draggedItem);
+                container.style.background = '';
+                draggedItem.classList.add('success');
+            });
+        });
+
+        function reset() {
+            container1.innerHTML = '<div class="item draggable" draggable="true"></div><div class="item draggable" draggable="true"></div><div class="item draggable" draggable="true"></div>';
+            container2.innerHTML = '';
+            draggedItem = null;
+        }
+    </script>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Drag and Drop Example</title>
+  <style>
+    .container {
+      width: 200px;
+      height: 300px;
+      border: 1px solid #ccc;
+      display: inline-block;
+      margin: 10px;
+      padding: 10px;
+    }
+    
+    .item {
+      width: 50px;
+      height: 50px;
+      background-color: #f1f1f1;
+      margin: 5px;
+      padding: 10px;
+      cursor: move;
+    }
+    
+    #container1 {
+      background-color: #f9f9f9;
+    }
+    
+    #container2 {
+      background-color: #fff;
+    }
+    
+    #reset {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="container1">
+    <div class="item" draggable="true" ondragstart="drag(event)">Item 1</div>
+    <div class="item" draggable="true" ondragstart="drag(event)">Item 2</div>
+    <div class="item" draggable="true" ondragstart="drag(event)">Item 3</div>
+  </div>
+  
+  <div class="container" id="container2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+  
+  <button id="reset" onclick="reset()">Reset</button>
+  
+  <script>
+    function allowDrop(event) {
+      event.preventDefault();
+    }
+    
+    function drag(event) {
+      event.dataTransfer.setData("text", event.target.id);
+    }
+    
+    function drop(event) {
+      event.preventDefault();
+      var data = event.dataTransfer.getData("text");
+      event.target.appendChild(document.getElementById(data));
+    }
+    
+    function reset() {
+      var container1 = document.getElementById("container1");
+      var container2 = document.getElementById("container2");
+      
+      container2.innerHTML = "";
+      
+      var items = container1.getElementsByClassName("item");
+      for (var i = 0; i < items.length; i++) {
+        container1.appendChild(items[i]);
+      }
+    }
+  </script>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Drag and Drop Example</title>
+  <style>
+    .container {
+      width: 200px;
+      height: 300px;
+      border: 1px solid #ccc;
+      display: inline-block;
+      margin: 10px;
+      padding: 10px;
+    }
+    
+    .item {
+      width: 50px;
+      height: 50px;
+      background-color: #f1f1f1;
+      margin: 5px;
+      padding: 10px;
+      cursor: move;
+      transition: background-color 0.3s;
+    }
+    
+    .item.dragging {
+      background-color: #ddd;
+    }
+    
+    #container1 {
+      background-color: #f9f9f9;
+    }
+    
+    #container2 {
+      background-color: #fff;
+    }
+    
+    #successMessage {
+      display: none;
+      color: green;
+      font-weight: bold;
+    }
+    
+    #reset {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="container1">
+    <div class="item" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">Item 1</div>
+    <div class="item" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">Item 2</div>
+    <div class="item" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">Item 3</div>
+  </div>
+  
+  <div class="container" id="container2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+  
+  <div id="successMessage"></div>
+  
+  <button id="reset" onclick="reset()">Reset</button>
+  
+  <script>
+    function allowDrop(event) {
+      event.preventDefault();
+    }
+    
+    function drag(event) {
+      event.dataTransfer.setData("text", event.target.id);
+      event.target.classList.add("dragging");
+    }
+    
+    function dragEnd(event) {
+      event.target.classList.remove("dragging");
+    }
+    
+    function drop(event) {
+      event.preventDefault();
+      var data = event.dataTransfer.getData("text");
+      var droppedItem = document.getElementById(data);
+      event.target.appendChild(droppedItem);
+      
+      var successMessage = document.getElementById("successMessage");
+      successMessage.textContent = "Item successfully dropped!";
+      successMessage.style.display = "block";
+      
+      setTimeout(function() {
+        successMessage.style.display = "none";
+      }, 2000);
+    }
+    
+    function reset() {
+      var container1 = document.getElementById("container1");
+      var container2 = document.getElementById("container2");
+      
+      container2.innerHTML = "";
+      
+      var items = container1.getElementsByClassName("item");
+      for (var i = 0; i < items.length; i++) {
+        container1.appendChild(items[i]);
+      }
+    }
+  </script>
+</body>
+</html> -->
